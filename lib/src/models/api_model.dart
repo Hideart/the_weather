@@ -1,28 +1,32 @@
-class City {
+abstract class GeoObject {
   final String name;
+
+  GeoObject(this.name);
+}
+
+class City extends GeoObject {
   final String region;
   final String regionCode;
 
-  City({
-    required this.name,
-    required this.region,
-    required this.regionCode,
-  });
+  City(super.name, this.region, this.regionCode);
 }
 
-class CitiesResponseMetadata {
+class Country extends GeoObject {
+  final String code;
+
+  Country(super.name, this.code);
+}
+
+class GeoResponseMetadata {
   final int currentOffset;
   final int totalCount;
 
-  CitiesResponseMetadata({
-    required this.currentOffset,
-    required this.totalCount,
-  });
+  GeoResponseMetadata(this.currentOffset, this.totalCount);
 }
 
-class CitiesResponse {
-  final List<City> data;
-  final CitiesResponseMetadata metadata;
+class GeoResponse<T extends GeoObject> {
+  final List<T> data;
+  final GeoResponseMetadata metadata;
 
-  CitiesResponse({required this.data, required this.metadata});
+  GeoResponse(this.data, this.metadata);
 }
