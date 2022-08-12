@@ -10,7 +10,8 @@
     {
       "name": "Debug",
       "request": "launch",
-      "type": "dart"
+      "type": "dart",
+      "args": ["-d", "78DE3C8D-1347-4642-9676-1BFC41D41B9C"]
     },
     {
       "name": "Debug (Profile mode)",

@@ -1,4 +1,4 @@
-package com.hideart.passtore
+package ru.hideart.theweather
 
 import io.flutter.embedding.android.FlutterActivity
 
