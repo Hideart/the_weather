@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:the_weather/src/models/models.dart';
+import 'package:the_weather/assets/themes/default/default_theme_model.dart';
 
 AppTheme lightTheme = const AppTheme(
   name: AvailableTheme.LIGHT,
   brightness: Brightness.light,
-  accentColor: Color(0xFFCBFFD4),
-  accentSecondaryColor: Color(0xFF00E6C7),
+  accentSecondaryColor: Color(0xFFFFA68D),
+  accentColor: Color(0xFFFF778A),
   primaryColor: Colors.white,
   secondaryColor: Color(0xFFCACACA),
   darkBackgroundColor: Color(0xFFE9E9E9),
@@ -32,7 +32,25 @@ AppTheme lightTheme = const AppTheme(
   ),
 );
 
-ThemeData lightThemeData = ThemeData.light().copyWith(
+const swatchColorGrade = <int, Color>{
+  50: Color.fromRGBO(255, 119, 138, .1),
+  100: Color.fromRGBO(255, 119, 138, .2),
+  200: Color.fromRGBO(255, 119, 138, .3),
+  300: Color.fromRGBO(255, 119, 138, .4),
+  400: Color.fromRGBO(255, 119, 138, .5),
+  500: Color.fromRGBO(255, 119, 138, .6),
+  600: Color.fromRGBO(255, 119, 138, .7),
+  700: Color.fromRGBO(255, 119, 138, .8),
+  800: Color.fromRGBO(255, 119, 138, .9),
+  900: Color.fromRGBO(255, 119, 138, 1),
+};
+
+final ThemeData _lightThemeData = ThemeData(
   appBarTheme: const AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.dark),
+  primarySwatch: const MaterialColor(0xFFFF778A, swatchColorGrade),
+  brightness: Brightness.light,
+);
+
+ThemeData lightThemeData = _lightThemeData.copyWith(
   extensions: <ThemeExtension<AppTheme>>[lightTheme],
 );

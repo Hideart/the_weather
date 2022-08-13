@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:the_weather/src/metrics.dart';
-import 'package:the_weather/src/models/theme_model.dart';
+import 'package:the_weather/assets/themes/default/default_theme_model.dart';
 
 enum ThemedTextType { primary, secondary }
 

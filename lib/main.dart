@@ -3,12 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:the_weather/assets/themes/default_theme.dart';
-import 'package:the_weather/src/screens/home_screen.dart';
+import 'package:the_weather/assets/themes/default/default_theme.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:the_weather/src/cubits/overlay_cubit.dart';
-import 'package:the_weather/src/services/locator_service.dart';
-import 'package:the_weather/src/widgets/modals_container_widget.dart';
+import 'package:the_weather/packages/widgets/dismiss_keyboard.dart';
+import 'package:the_weather/src/app_state/geo/geo_cubit.dart';
+import 'package:the_weather/src/screens/router.dart';
+import 'package:the_weather/src/utils/service_locator.dart';
 
 Future initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,25 +46,17 @@ class TheWeatherApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<OverlayCubit>(
-          create: (_) => DI.get<OverlayCubit>(instanceName: 'overlays'),
-        ),
-      ],
-      child: MaterialApp(
-        theme: lightThemeData,
-        debugShowCheckedModeBanner: false,
-        home: Stack(
-          children: [
-            Scaffold(
-              body: HomeScreen(),
-            ),
-            const Material(
-              type: MaterialType.transparency,
-              child: ModalsContainer(),
-            ),
-          ],
+    final geoStateCubit = DI.get<GeoStateCubit>(instanceName: 'geo_state');
+    final router = appRouter(geoStateCubit);
+    return BlocProvider<GeoStateCubit>(
+      create: (_) => geoStateCubit,
+      child: DismissKeyboard(
+        child: MaterialApp.router(
+          theme: lightThemeData,
+          debugShowCheckedModeBanner: false,
+          routeInformationProvider: router.routeInformationProvider,
+          routeInformationParser: router.routeInformationParser,
+          routerDelegate: router.routerDelegate,
         ),
       ),
     );

@@ -1,41 +1,40 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:the_weather/src/models/api_model.dart';
 
 final Dio dio = Dio();
 
-class ApiEnvironmentException implements Exception {
+class GeoApiEnvironmentException implements Exception {
   String cause;
-  ApiEnvironmentException(this.cause);
+  GeoApiEnvironmentException(this.cause);
 }
 
-class API {
-  static final _rapidApiKey = dotenv.env['RAPID_API_KEY'];
+class GeoDataRepository {
+  final String? _rapidApiKey;
+  GeoDataRepository(this._rapidApiKey);
 
-  static Future<GeoResponse<City>> fetchCities({
+  Future<Map<String, dynamic>> fetchCities({
     int limit = 10,
     int offset = 0,
-    String country = 'RU',
+    required String countryCode,
     String? search,
   }) async {
-    final result = await API._geoGetList<GeoResponse<City>>(
+    final result = await this._geoGetList<Map<String, dynamic>>(
       'cities',
       query: <String, dynamic>{
-        'regionIds': country,
         'namePrefix': search,
         'limit': limit,
         'offset': offset,
+        'countryIds': countryCode
       },
     );
     return result.data!;
   }
 
-  static Future<GeoResponse<Country>> fetchCountries({
+  Future<Map<String, dynamic>> fetchCountries({
     int limit = 10,
     int offset = 0,
     String? search,
   }) async {
-    final result = await API._geoGetList<GeoResponse<Country>>(
+    final result = await this._geoGetList<Map<String, dynamic>>(
       'countries',
       query: <String, dynamic>{
         'namePrefix': search,
@@ -46,26 +45,28 @@ class API {
     return result.data!;
   }
 
-  static Future<Response<T>> _geoGetList<T>(
+  Future<Response<T>> _geoGetList<T>(
     String endpoint, {
     Map<String, dynamic>? headers,
     Map<String, dynamic>? query,
-  }) {
-    if (_rapidApiKey == null) {
-      throw ApiEnvironmentException(
+  }) async {
+    if (this._rapidApiKey == null) {
+      throw GeoApiEnvironmentException(
         'Env var RAPID_API_KEY is required\nPlease check your .env file',
       );
     }
-    return dio.get<T>(
+    final res = await dio.get<T>(
       'https://wft-geo-db.p.rapidapi.com/v1/geo/$endpoint',
       options: Options(
         headers: <String, dynamic>{
-          'x-rapidapi-key': _rapidApiKey,
+          'x-rapidapi-key': this._rapidApiKey,
           'x-rapidapi-host': 'wft-geo-db.p.rapidapi.com',
+          'content-type': 'application/json',
           ...(headers ?? <String, dynamic>{}),
         },
       ),
       queryParameters: query,
     );
+    return res;
   }
 }

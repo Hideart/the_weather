@@ -1,86 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:the_weather/assets/themes/default/default_theme_model.dart';
+import 'package:the_weather/packages/widgets/screen_wrapper_widget/screen_wrapper_widget.dart';
 import 'package:the_weather/src/metrics.dart';
-import 'package:the_weather/src/models/theme_model.dart';
-import 'package:the_weather/src/widgets/header_widget.dart';
 
-class ThemedScreenWrapper extends StatefulWidget {
-  final List<Widget> children;
-  final ThemedHeaderData? header;
-  final double expandedHeight = 100.0;
-  final PageStorageKey<String>? contentKey;
-  final bool enableSafeAreaTop;
-  final bool enableSafeAreaBottom;
-  final bool enableHorizontalInstes;
-
-  const ThemedScreenWrapper({
-    Key? key,
-    this.header,
-    required this.children,
-    this.contentKey,
-    this.enableSafeAreaBottom = true,
-    this.enableSafeAreaTop = true,
-    this.enableHorizontalInstes = true,
-  }) : super(key: key);
-
-  @override
-  State<ThemedScreenWrapper> createState() => _ThemedScreenWrapperState();
+class ThemedAppBarData extends PasstoreAppBarData {
+  ThemedAppBarData({
+    required super.title,
+    super.collapsable,
+    super.pinned,
+    super.rightContent,
+    super.applyBottomBorder,
+    super.disablePop,
+    super.titleScaleFactor,
+  });
 }
 
-class _ThemedScreenWrapperState extends State<ThemedScreenWrapper> {
+class ThemedScreenWrapper extends StatelessWidget {
+  final List<Widget> children;
+  final ThemedAppBarData? appBarData;
+  const ThemedScreenWrapper({Key? key, required this.children, this.appBarData})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final AppTheme theme = Theme.of(context).extension<AppTheme>()!;
-    final safeArea = MediaQuery.of(context).padding;
 
-    return Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [theme.darkBackgroundColor, theme.darkBackgroundColor],
-              end: Alignment.bottomCenter,
-              begin: Alignment.topCenter,
-            ),
-          ),
-        ),
-        ScrollConfiguration(
-          behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-          child: CustomScrollView(
-            key: this.widget.contentKey,
-            slivers: <Widget>[
-              this.widget.header != null
-                  ? ThemedHeader(
-                      title: this.widget.header!.title,
-                      pinned: this.widget.header!.pinned,
-                      collapsable: this.widget.header!.collapsable,
-                      rightContent: this.widget.header!.rightContent,
-                      expandedHeight: this.widget.header!.expandedHeight,
-                      collapsedHeight: this.widget.header!.collapsedHeight,
-                      applyBottomBorder: this.widget.header!.applyBottomBorder,
-                    )
-                  : const SliverPadding(padding: EdgeInsets.all(0)),
-              SliverPadding(
-                padding: EdgeInsets.only(
-                  top: this.widget.header == null &&
-                          this.widget.enableSafeAreaTop
-                      ? safeArea.top
-                      : 0,
-                  bottom:
-                      this.widget.enableSafeAreaBottom ? safeArea.bottom : 0,
-                  left: this.widget.enableHorizontalInstes ? AppMetrics.DEFAULT_MARGIN : 0,
-                  right: this.widget.enableHorizontalInstes ? AppMetrics.DEFAULT_MARGIN : 0,
-                ),
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) => this.widget.children[index],
-                    childCount: this.widget.children.length,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
+    return PasstoreScreenWrapper(
+      appBar: this.appBarData != null
+          ? PasstoreAppBarData(
+              title: this.appBarData!.title,
+              collapsable: this.appBarData!.collapsable,
+              pinned: this.appBarData!.pinned,
+              rightContent: this.appBarData!.rightContent,
+              applyBottomBorder: this.appBarData!.applyBottomBorder,
+              disablePop: this.appBarData!.disablePop,
+              titleScaleFactor: this.appBarData!.titleScaleFactor,
+              headerSize: AppMetrics.HEADER_SIZE,
+              blurMultiplier: AppMetrics.BLUR_MULTIPLIER,
+              defaultMargin: AppMetrics.DEFAULT_MARGIN,
+              littleMargin: AppMetrics.LITTLE_MARGIN,
+              borderRadius: AppMetrics.BORDER_RADIUS,
+              titleSize: AppMetrics.TITLE_SIZE,
+              textColor: theme.textPrimaryColor,
+            )
+          : null,
+      backgroundGradient: LinearGradient(
+        colors: [theme.darkBackgroundColor, theme.darkBackgroundColor],
+        end: Alignment.bottomCenter,
+        begin: Alignment.topCenter,
+      ),
+      defaultMargin: AppMetrics.DEFAULT_MARGIN,
+      children: this.children,
     );
   }
 }
