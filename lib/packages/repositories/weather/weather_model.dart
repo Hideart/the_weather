@@ -6,7 +6,8 @@ enum WeatherIconData {
   thunderstorm('Thunderstorm', Icons.thunderstorm_rounded),
   snow('Snow', Icons.cloudy_snowing),
   rain('Rain', Icons.thunderstorm_rounded),
-  drizzle('Drizzle', Icons.cloudy_snowing);
+  drizzle('Drizzle', Icons.cloudy_snowing),
+  fog('Fog', Icons.foggy);
 
   final IconData icon;
   final String weatherType;
