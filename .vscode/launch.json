@@ -14,6 +14,12 @@
       "args": ["-d", "78DE3C8D-1347-4642-9676-1BFC41D41B9C"]
     },
     {
+      "name": "Debug Android",
+      "request": "launch",
+      "type": "dart",
+      "args": ["-d", "android"]
+    },
+    {
       "name": "Debug (Profile mode)",
       "request": "launch",
       "type": "dart",
