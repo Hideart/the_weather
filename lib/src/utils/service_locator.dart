@@ -3,9 +3,6 @@ import 'package:get_it/get_it.dart';
 import 'package:the_weather/packages/repositories/geo_data/geo_data_repository.dart';
 import 'package:the_weather/packages/repositories/weather/weather_repository.dart';
 import 'package:the_weather/src/app_state/geo/geo_cubit.dart';
-import 'package:the_weather/src/screens/cities_screen/bloc/cities_cubit.dart';
-import 'package:the_weather/src/screens/countries_screen/bloc/countries_cubit.dart';
-import 'package:the_weather/src/screens/home_screen/bloc/weather_cubit.dart';
 
 class DI {
   static final GetIt _locator = GetIt.instance;
@@ -15,21 +12,9 @@ class DI {
       () => GeoDataRepository(dotenv.env['RAPID_API_KEY']),
       instanceName: 'geodata',
     );
-    DI.registerFactory<WeatherRepository>(
+    DI.registerLazySingleton<WeatherRepository>(
       () => WeatherRepository(dotenv.env['OWM_API_KEY']),
       instanceName: 'weather',
-    );
-    DI.registerFactory<WeatherCubit>(
-      () => WeatherCubit(),
-      instanceName: 'weather_cubit',
-    );
-    DI.registerFactory<CountriesCubit>(
-      () => CountriesCubit(),
-      instanceName: 'countries',
-    );
-    DI.registerFactory<CitiesCubit>(
-      () => CitiesCubit(),
-      instanceName: 'cities',
     );
     DI.registerSingleton<GeoStateCubit>(
       GeoStateCubit(),
