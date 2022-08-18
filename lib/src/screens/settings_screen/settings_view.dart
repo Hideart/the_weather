@@ -28,7 +28,6 @@ class SettingsView extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  const SizedBox(height: AppMetrics.DEFAULT_MARGIN),
                   MenuItemsList(
                     items: [
                       MenuItemData(

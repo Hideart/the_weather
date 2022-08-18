@@ -47,7 +47,13 @@ class MenuItemsList extends StatelessWidget {
                 child: Column(
                   children: this
                       .items
-                      .map((item) => ThemedMenuItem(item.text, data: item))
+                      .map(
+                        (item) => ThemedMenuItem(
+                          item.text,
+                          data: item,
+                          needSeparator: item != this.items.last,
+                        ),
+                      )
                       .toList(),
                 ),
               ),

@@ -31,7 +31,6 @@ class HomeView extends StatelessWidget {
             pinned: true,
             rightContent: Tapable(
               properties: TapableProps(
-                padding: const EdgeInsets.all(AppMetrics.LITTLE_MARGIN / 2),
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(
                     Radius.circular(
@@ -49,6 +48,7 @@ class HomeView extends StatelessWidget {
               ),
             ),
           ),
+          padding: const EdgeInsets.only(top: AppMetrics.DEFAULT_MARGIN),
           children: [
             BlocBuilder<WeatherCubit, WeatherState>(
               builder: (context, state) => Column(
@@ -60,9 +60,6 @@ class HomeView extends StatelessWidget {
                           ? const CenteredLoader()
                           : Column(
                               children: [
-                                const SizedBox(
-                                  height: AppMetrics.DEFAULT_MARGIN,
-                                ),
                                 BlocBuilder<GeoStateCubit, GeoState>(
                                   builder: (context, geoState) => ThemedText(
                                     '${geoState.city}, ${geoState.countryCode}',

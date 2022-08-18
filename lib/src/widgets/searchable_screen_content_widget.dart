@@ -38,14 +38,8 @@ class _SearchableScreenContentState extends State<SearchableScreenContent> {
   Widget build(BuildContext context) {
     return Column(
       children: this.widget.error
-          ? const [
-              Padding(
-                padding: EdgeInsets.only(top: AppMetrics.DEFAULT_MARGIN),
-                child: ListError(),
-              )
-            ]
+          ? const [ListError()]
           : [
-              const SizedBox(height: AppMetrics.DEFAULT_MARGIN),
               ThemedTextField(
                 onChange: this.widget.onSearch,
               ),

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:the_weather/packages/widgets/screen_wrapper_widget/screen_wrapper_widget.dart';
 import 'package:the_weather/src/app_state/geo/geo_cubit.dart';
 import 'package:the_weather/src/app_state/geo/geo_state.dart';
 import 'package:the_weather/src/metrics.dart';

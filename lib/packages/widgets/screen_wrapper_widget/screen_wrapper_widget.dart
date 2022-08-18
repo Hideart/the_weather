@@ -3,27 +3,44 @@ import 'appbar_widget.dart';
 
 export 'appbar_widget.dart';
 
+class SafeAreaEnables {
+  final bool left;
+  final bool top;
+  final bool right;
+  final bool bottom;
+
+  const SafeAreaEnables.at({
+    this.left = false,
+    this.right = false,
+    this.bottom = false,
+    this.top = false,
+  });
+}
+
 class PasstoreScreenWrapper extends StatelessWidget {
   final List<Widget> children;
   final PasstoreAppBarData? appBar;
   final double expandedHeight = 100.0;
   final PageStorageKey<String>? contentKey;
-  final bool enableSafeAreaTop;
-  final bool enableSafeAreaBottom;
-  final bool enableHorizontalInstes;
+  final SafeAreaEnables safeAreaEnabledAt;
   final LinearGradient? backgroundGradient;
   final double defaultMargin;
+  final EdgeInsets? padding;
 
   const PasstoreScreenWrapper({
     Key? key,
     this.appBar,
     required this.children,
     this.contentKey,
-    this.enableSafeAreaBottom = true,
-    this.enableSafeAreaTop = true,
-    this.enableHorizontalInstes = true,
+    this.safeAreaEnabledAt = const SafeAreaEnables.at(
+      top: false,
+      bottom: false,
+      left: false,
+      right: false,
+    ),
     this.backgroundGradient,
     this.defaultMargin = 15.0,
+    this.padding,
   }) : super(key: key);
 
   @override
@@ -51,12 +68,14 @@ class PasstoreScreenWrapper extends StatelessWidget {
                   : const SliverPadding(padding: EdgeInsets.all(0)),
               SliverPadding(
                 padding: EdgeInsets.only(
-                  top: this.appBar == null && this.enableSafeAreaTop
-                      ? safeArea.top
-                      : 0,
-                  bottom: this.enableSafeAreaBottom ? safeArea.bottom : 0,
-                  left: this.enableHorizontalInstes ? this.defaultMargin : 0,
-                  right: this.enableHorizontalInstes ? this.defaultMargin : 0,
+                  top: this.appBar == null && this.safeAreaEnabledAt.top
+                      ? safeArea.top + (this.padding?.top ?? 0)
+                      : this.padding?.top ?? 0,
+                  bottom: this.safeAreaEnabledAt.bottom
+                      ? safeArea.bottom + (this.padding?.bottom ?? 0)
+                      : this.padding?.bottom ?? 0,
+                  left: this.padding?.left ?? 0,
+                  right: this.padding?.right ?? 0,
                 ),
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate(
