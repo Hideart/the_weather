@@ -17,7 +17,7 @@ class ThemedAppBarData extends PasstoreAppBarData {
 
 class ThemedScreenWrapper extends StatelessWidget {
   final ThemedAppBarData? appBarData;
-  final EdgeInsets? padding;
+  final EdgeInsets padding;
   final List<Widget> children;
   final SafeAreaEnables safeAreaEnabledAt;
 
@@ -25,7 +25,8 @@ class ThemedScreenWrapper extends StatelessWidget {
     Key? key,
     required this.children,
     this.appBarData,
-    this.padding,
+    this.padding =
+        const EdgeInsets.symmetric(horizontal: AppMetrics.DEFAULT_MARGIN),
     this.safeAreaEnabledAt = const SafeAreaEnables.at(top: true, bottom: true),
   }) : super(key: key);
 
@@ -52,7 +53,7 @@ class ThemedScreenWrapper extends StatelessWidget {
               textColor: theme.textPrimaryColor,
             )
           : null,
-      padding: this.padding ?? const EdgeInsets.all(AppMetrics.DEFAULT_MARGIN),
+      padding: this.padding,
       safeAreaEnabledAt: this.safeAreaEnabledAt,
       backgroundGradient: LinearGradient(
         colors: [theme.darkBackgroundColor, theme.darkBackgroundColor],

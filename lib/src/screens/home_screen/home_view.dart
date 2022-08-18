@@ -29,6 +29,7 @@ class HomeView extends StatelessWidget {
           appBarData: ThemedAppBarData(
             title: 'The Weather',
             pinned: true,
+            disablePop: true,
             rightContent: Tapable(
               properties: TapableProps(
                 decoration: const BoxDecoration(
@@ -48,7 +49,7 @@ class HomeView extends StatelessWidget {
               ),
             ),
           ),
-          padding: const EdgeInsets.only(top: AppMetrics.DEFAULT_MARGIN),
+          padding: const EdgeInsets.all(AppMetrics.DEFAULT_MARGIN),
           children: [
             BlocBuilder<WeatherCubit, WeatherState>(
               builder: (context, state) => Column(
