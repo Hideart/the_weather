@@ -70,6 +70,7 @@ class HomeView extends StatelessWidget {
                                       fontSize: AppMetrics.HEADER_SIZE,
                                       fontWeight: FontWeight.bold,
                                     ),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
                                 const SizedBox(
@@ -80,6 +81,7 @@ class HomeView extends StatelessWidget {
                                       .firstWhere(
                                         (iconData) =>
                                             iconData.toString() == state.main,
+                                        orElse: () => WeatherIconData.values[0],
                                       )
                                       .icon,
                                   size: screenSize.width / 1.8,

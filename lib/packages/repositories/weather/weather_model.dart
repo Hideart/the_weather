@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum WeatherIconData {
+  error('__ERROR__', Icons.error_outline_rounded),
   clouds('Clouds', Icons.cloud),
   clear('Clear', Icons.sunny),
   thunderstorm('Thunderstorm', Icons.thunderstorm_rounded),

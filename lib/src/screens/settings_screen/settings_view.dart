@@ -37,6 +37,7 @@ class SettingsView extends StatelessWidget {
                           Icons.language,
                           color: theme.textPrimaryColor,
                         ),
+                        valueMaxLength: 20,
                         value: state.countryCode,
                         hasChildren: true,
                         onTap: () => context.go('/settings/countries'),
@@ -50,6 +51,7 @@ class SettingsView extends StatelessWidget {
                               : theme.textPrimaryColor,
                         ),
                         value: state.city,
+                        valueMaxLength: 20,
                         hasChildren: state.countryCode != null,
                         textColor: state.countryCode == null
                             ? theme.textPaleColor

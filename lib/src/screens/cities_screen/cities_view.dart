@@ -75,7 +75,7 @@ class _CitiesViewState extends State<CitiesView> {
                   onSearch: (value) => this.handleSearch(context, value),
                   child: MenuItemsList(
                     items: state.list.map((item) {
-                      return ThemedMenuItem(
+                      return MenuItemData(
                         item.name.length > 20
                             ? '${item.name.substring(0, 20)}...'
                             : item.name,

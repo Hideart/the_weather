@@ -8,6 +8,8 @@ class ThemedText extends StatelessWidget {
   final String data;
   final TextStyle? style;
   final TextAlign? textAlign;
+  final int? maxLength;
+  final bool needElipsis;
   final ThemedTextType type;
 
   const ThemedText(
@@ -16,6 +18,8 @@ class ThemedText extends StatelessWidget {
     Key? key,
     this.style,
     this.textAlign,
+    this.maxLength,
+    this.needElipsis = true,
   }) : super(key: key);
 
   @override
@@ -50,8 +54,14 @@ class ThemedText extends StatelessWidget {
       overflow: this.style?.overflow,
       fontFamily: 'CenturyGothic',
     );
+
+    final String finalText = this.maxLength != null &&
+            this.data.length > this.maxLength!
+        ? '${this.data.substring(0, this.maxLength! - 1)}${this.needElipsis ? '...' : ''}'
+        : this.data;
+
     return Text(
-      this.data,
+      finalText,
       style: themedStyle,
       textAlign: this.textAlign,
       key: ValueKey(theme.name),

@@ -47,20 +47,7 @@ class MenuItemsList extends StatelessWidget {
                 child: Column(
                   children: this
                       .items
-                      .map(
-                        (item) => ThemedMenuItem(
-                          item.text,
-                          icon: item.icon,
-                          value: item.value,
-                          hasChildren: item.hasChildren,
-                          needSeparator: item != this.items.last,
-                          textColor: item.textColor ?? theme.textPrimaryColor,
-                          hoverColor: item.hoverColor,
-                          splashColor: item.splashColor,
-                          onTap: item.onTap,
-                          onTapDown: item.onTapDown,
-                        ),
-                      )
+                      .map((item) => ThemedMenuItem(item.text, data: item))
                       .toList(),
                 ),
               ),

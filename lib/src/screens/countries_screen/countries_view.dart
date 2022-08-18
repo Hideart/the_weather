@@ -70,22 +70,24 @@ class _CountriesViewState extends State<CountriesView> {
                 onSearch: (value) => this.handleSearch(context, value),
                 child: BlocBuilder<GeoStateCubit, GeoState>(
                   builder: (context, geoState) => MenuItemsList(
-                    items: state.list.map((item) {
-                      return ThemedMenuItem(
-                        '${item.name.length > 20 ? '${item.name.substring(0, 20)}...' : item.name}, ${item.code}',
-                        icon: geoState.countryCode == item.code
-                            ? const Icon(
-                                Icons.check,
-                                size: AppMetrics.TITLE_SIZE,
-                              )
-                            : null,
-                        onTap: () => DI
-                            .get<GeoStateCubit>(
-                              instanceName: 'geo_state',
-                            )
-                            .setCountry(item.code),
-                      );
-                    }).toList(),
+                    items: state.list
+                        .map<MenuItemData>(
+                          (item) => MenuItemData(
+                            '${item.name.length > 20 ? '${item.name.substring(0, 20)}...' : item.name}, ${item.code}',
+                            icon: geoState.countryCode == item.code
+                                ? const Icon(
+                                    Icons.check,
+                                    size: AppMetrics.TITLE_SIZE,
+                                  )
+                                : null,
+                            onTap: () => DI
+                                .get<GeoStateCubit>(
+                                  instanceName: 'geo_state',
+                                )
+                                .setCountry(item.code),
+                          ),
+                        )
+                        .toList(),
                   ),
                 ),
               ),

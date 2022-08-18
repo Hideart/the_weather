@@ -12,6 +12,8 @@ class MenuItemData {
   final Color? textColor;
   final Color? hoverColor;
   final Color? splashColor;
+  final int? valueMaxLength;
+  final bool needElipsis;
   final void Function() onTap;
   final void Function(TapDownDetails)? onTapDown;
 
@@ -23,45 +25,23 @@ class MenuItemData {
     this.textColor,
     this.hoverColor,
     this.splashColor,
+    this.valueMaxLength,
+    this.needElipsis = true,
     this.onTapDown,
     required this.onTap,
   });
 }
 
-class ThemedMenuItem extends StatelessWidget implements MenuItemData {
-  @override
+class ThemedMenuItem extends StatelessWidget {
   final String text;
-  @override
-  final String? value;
-  @override
-  final Widget? icon;
-  @override
-  final bool hasChildren;
-  @override
-  final Color? textColor;
-  @override
-  final Color? hoverColor;
-  @override
-  final Color? splashColor;
-  @override
-  final void Function() onTap;
-  @override
-  final void Function(TapDownDetails details)? onTapDown;
-
+  final MenuItemData data;
   final bool needSeparator;
 
   const ThemedMenuItem(
     this.text, {
     Key? key,
-    this.value,
-    this.icon,
-    this.hasChildren = false,
+    required this.data,
     this.needSeparator = true,
-    this.textColor,
-    this.hoverColor,
-    this.splashColor,
-    required this.onTap,
-    this.onTapDown,
   }) : super(key: key);
 
   @override
@@ -77,11 +57,11 @@ class ThemedMenuItem extends StatelessWidget implements MenuItemData {
               bottom: AppMetrics.LITTLE_MARGIN,
               right: AppMetrics.LITTLE_MARGIN,
             ),
-            onTap: this.onTap,
-            onTapDown: this.onTapDown,
-            splashColor: this.splashColor,
+            onTap: this.data.onTap,
+            onTapDown: this.data.onTapDown,
+            splashColor: this.data.splashColor,
             hoverColor:
-                this.hoverColor ?? theme.secondaryColor.withOpacity(0.6),
+                this.data.hoverColor ?? theme.secondaryColor.withOpacity(0.6),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(
                 AppMetrics.BORDER_RADIUS,
@@ -110,7 +90,7 @@ class ThemedMenuItem extends StatelessWidget implements MenuItemData {
                           constraints: const BoxConstraints(
                             maxWidth: AppMetrics.LITTLE_MARGIN * 2,
                           ),
-                          child: this.icon ?? const SizedBox(),
+                          child: this.data.icon ?? const SizedBox(),
                         ),
                       ),
                       ThemedText(
@@ -119,7 +99,7 @@ class ThemedMenuItem extends StatelessWidget implements MenuItemData {
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: this.textColor ?? theme.textPrimaryColor,
+                          color: this.data.textColor ?? theme.textPrimaryColor,
                         ),
                       ),
                     ],
@@ -127,13 +107,15 @@ class ThemedMenuItem extends StatelessWidget implements MenuItemData {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      this.value != null && this.value!.isNotEmpty
+                      this.data.value != null && this.data.value!.isNotEmpty
                           ? Padding(
                               padding: const EdgeInsets.only(
                                 right: AppMetrics.LITTLE_MARGIN / 2,
                               ),
                               child: ThemedText(
-                                this.value!,
+                                this.data.value!,
+                                maxLength: this.data.valueMaxLength,
+                                needElipsis: this.data.needElipsis,
                                 style: TextStyle(
                                   fontSize: AppMetrics.LITTLE_TEXT_SIZE,
                                   color: theme.textPaleColor,
@@ -141,7 +123,7 @@ class ThemedMenuItem extends StatelessWidget implements MenuItemData {
                               ),
                             )
                           : const SizedBox(),
-                      this.hasChildren
+                      this.data.hasChildren
                           ? Icon(
                               Icons.arrow_forward_ios,
                               color: theme.textPaleColor,
