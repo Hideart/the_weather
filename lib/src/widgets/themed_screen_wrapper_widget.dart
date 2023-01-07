@@ -22,7 +22,7 @@ class ThemedScreenWrapper extends StatelessWidget {
   final List<Widget> children;
   final SafeAreaEnables safeAreaEnabledAt;
   final AsyncCallback? onRefresh;
-  final bool? refreshing;
+  final bool? loading;
   final ScrollController? scrollController;
 
   const ThemedScreenWrapper({
@@ -33,7 +33,7 @@ class ThemedScreenWrapper extends StatelessWidget {
         const EdgeInsets.symmetric(horizontal: AppMetrics.DEFAULT_MARGIN),
     this.safeAreaEnabledAt = const SafeAreaEnables.at(top: true, bottom: true),
     this.onRefresh,
-    this.refreshing,
+    this.loading,
     this.scrollController,
   }) : super(key: key);
 
@@ -69,7 +69,7 @@ class ThemedScreenWrapper extends StatelessWidget {
       ),
       defaultMargin: AppMetrics.DEFAULT_MARGIN,
       onRefresh: this.onRefresh,
-      refreshing: this.refreshing,
+      loading: this.loading,
       scrollController: this.scrollController,
       children: this.children,
     );

@@ -30,7 +30,7 @@ class PasstoreScreenWrapper extends StatefulWidget {
   final double defaultMargin;
   final EdgeInsets? padding;
   final AsyncCallback? onRefresh;
-  final bool? refreshing;
+  final bool? loading;
   final ScrollController? scrollController;
 
   static const double refreshExtentValue = 100.0;
@@ -50,7 +50,7 @@ class PasstoreScreenWrapper extends StatefulWidget {
     this.defaultMargin = 15.0,
     this.padding,
     this.onRefresh,
-    this.refreshing,
+    this.loading,
     this.scrollController,
   }) : super(key: key);
 
@@ -59,44 +59,27 @@ class PasstoreScreenWrapper extends StatefulWidget {
 }
 
 class _PasstoreScreenWrapperState extends State<PasstoreScreenWrapper> {
-  bool? lastFrameRefreshing;
-
-  void _showRefreshIndicator(bool lastFrameRefreshing) {
-    if (this.widget.scrollController == null) {
+  void _showRefreshIndicatorIfNeeded() {
+    if (this.widget.scrollController == null || this.widget.onRefresh == null) {
       return;
     }
-    if (!lastFrameRefreshing &&
-        this.widget.refreshing == true &&
+    if (this.widget.loading == true &&
         this.widget.scrollController!.offset >= 0.0) {
       this.widget.scrollController!.animateTo(
             -PasstoreScreenWrapper.refreshExtentValue,
             duration: const Duration(milliseconds: 200),
             curve: Curves.ease.flipped,
           );
-      this.lastFrameRefreshing = false;
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    SchedulerBinding.instance.addPostFrameCallback(
-      (_) => this._showRefreshIndicator(!(this.widget.refreshing ?? false)),
-    );
-  }
-
-  @override
-  void didUpdateWidget(PasstoreScreenWrapper oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    this._showRefreshIndicator(oldWidget.refreshing ?? false);
   }
 
   @override
   Widget build(BuildContext context) {
     final safeArea = MediaQuery.of(context).padding;
-    if (this.lastFrameRefreshing != null) {
-      this.lastFrameRefreshing = this.widget.refreshing;
-    }
+
+    SchedulerBinding.instance.addPostFrameCallback(
+      (_) => this._showRefreshIndicatorIfNeeded(),
+    );
 
     return Stack(
       children: [

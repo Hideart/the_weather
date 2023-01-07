@@ -58,7 +58,7 @@ class _HomeViewState extends State<HomeView> {
             ),
             padding: const EdgeInsets.all(AppMetrics.DEFAULT_MARGIN),
             onRefresh: () => context.read<WeatherCubit>().updateWeather(),
-            refreshing: weatherState.loading,
+            loading: weatherState.loading,
             scrollController: this._contentScrollController,
             children: [
               Column(
