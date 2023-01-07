@@ -2,22 +2,27 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "MacOS",
-      "type": "dart",
-      "request": "launch",
-      "args": ["-d", "macos"]
-    },
-    {
       "name": "Debug",
       "request": "launch",
       "type": "dart",
-      "args": ["-d", "78DE3C8D-1347-4642-9676-1BFC41D41B9C"]
     },
     {
-      "name": "Debug Android",
+      "name": "Debug (iOS)",
       "request": "launch",
       "type": "dart",
-      "args": ["-d", "android"]
+      "args": ["-d", "7209b49b3cfd23a96b7db681ab9837873ed15d3a"]
+    },
+    {
+      "name": "Debug (Android)",
+      "request": "launch",
+      "type": "dart",
+      "args": ["-d", "4b61afdb"]
+    },
+    {
+      "name": "Debug (MacOS)",
+      "request": "launch",
+      "type": "dart",
+      "args": ["-d", "macos"]
     },
     {
       "name": "Debug (Profile mode)",

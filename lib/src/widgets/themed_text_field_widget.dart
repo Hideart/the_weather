@@ -53,7 +53,7 @@ class _ThemedTextFieldState extends State<ThemedTextField> {
       decoration: InputDecoration(
         filled: true,
         fillColor: theme.primaryColor,
-        icon: this.focused
+        suffixIcon: this.focused
             ? Tapable(
                 properties: TapableProps(
                   decoration: const BoxDecoration(
@@ -63,7 +63,7 @@ class _ThemedTextFieldState extends State<ThemedTextField> {
                   ),
                   child: Icon(
                     Icons.close_rounded,
-                    color: theme.textPrimaryColor,
+                    color: theme.accentColor,
                   ),
                   onTap: clearInput,
                 ),

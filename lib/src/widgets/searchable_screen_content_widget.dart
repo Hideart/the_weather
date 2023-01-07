@@ -40,6 +40,7 @@ class _SearchableScreenContentState extends State<SearchableScreenContent> {
       children: this.widget.error
           ? const [ListError()]
           : [
+              const SizedBox(height: AppMetrics.LITTLE_MARGIN),
               ThemedTextField(
                 onChange: this.widget.onSearch,
               ),

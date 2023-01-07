@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:the_weather/assets/themes/default/default_theme_model.dart';
 import 'package:the_weather/packages/widgets/screen_wrapper_widget/screen_wrapper_widget.dart';
@@ -20,6 +21,9 @@ class ThemedScreenWrapper extends StatelessWidget {
   final EdgeInsets padding;
   final List<Widget> children;
   final SafeAreaEnables safeAreaEnabledAt;
+  final AsyncCallback? onRefresh;
+  final bool? refreshing;
+  final ScrollController? scrollController;
 
   const ThemedScreenWrapper({
     Key? key,
@@ -28,6 +32,9 @@ class ThemedScreenWrapper extends StatelessWidget {
     this.padding =
         const EdgeInsets.symmetric(horizontal: AppMetrics.DEFAULT_MARGIN),
     this.safeAreaEnabledAt = const SafeAreaEnables.at(top: true, bottom: true),
+    this.onRefresh,
+    this.refreshing,
+    this.scrollController,
   }) : super(key: key);
 
   @override
@@ -61,6 +68,9 @@ class ThemedScreenWrapper extends StatelessWidget {
         begin: Alignment.topCenter,
       ),
       defaultMargin: AppMetrics.DEFAULT_MARGIN,
+      onRefresh: this.onRefresh,
+      refreshing: this.refreshing,
+      scrollController: this.scrollController,
       children: this.children,
     );
   }
